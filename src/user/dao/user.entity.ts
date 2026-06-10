@@ -5,6 +5,7 @@ export class TelegramUser {
   @PrimaryGeneratedColumn()
   id: number;
 
+  // Telegram IDs fit safely in JS number for current ID ranges (~10^9)
   @Column({
     name: 'telegram_id',
     type: 'bigint',

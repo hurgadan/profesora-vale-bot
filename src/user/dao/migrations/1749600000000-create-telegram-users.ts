@@ -24,6 +24,6 @@ export class CreateTelegramUsers1749600000000 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('telegram_users');
+    await queryRunner.dropTable('telegram_users', true);
   }
 }
