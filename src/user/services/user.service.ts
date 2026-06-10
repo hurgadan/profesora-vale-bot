@@ -27,8 +27,7 @@ export class UserService {
     };
 
     if (existing) {
-      await this.userRepo.update(existing.id, data);
-      return { ...existing, ...data };
+      return this.userRepo.save({ ...existing, ...data });
     }
 
     return this.userRepo.save({ telegramId: from.id, ...data });
@@ -44,7 +43,7 @@ export class UserService {
     if (existing) {
       await this.stateRepo.update(existing.id, { pendingAction: action });
     } else {
-      await this.stateRepo.save({ user: { id: userId } as TelegramUser, pendingAction: action });
+      await this.stateRepo.save({ user: { id: userId } as unknown as TelegramUser, pendingAction: action });
     }
   }
 

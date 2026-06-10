@@ -53,16 +53,18 @@ describe('UserService', () => {
     it('updates existing user when found', async () => {
       const existing = { id: 5, telegramId: 123, firstName: 'Old' } as TelegramUser;
       mockUserRepo.findByTelegramId.mockResolvedValue(existing);
-      mockUserRepo.update.mockResolvedValue(undefined);
       mockUserRepo.save.mockResolvedValue({ ...existing, firstName: 'Ivan' } as TelegramUser);
 
-      await service.upsert({ id: 123, first_name: 'Ivan', last_name: null, username: null });
+      const result = await service.upsert({ id: 123, first_name: 'Ivan', last_name: null, username: null });
 
-      expect(mockUserRepo.update).toHaveBeenCalledWith(5, {
+      expect(mockUserRepo.save).toHaveBeenCalledWith({
+        id: 5,
+        telegramId: 123,
         firstName: 'Ivan',
         lastName: null,
         username: null,
       });
+      expect(result.firstName).toBe('Ivan');
     });
   });
 
