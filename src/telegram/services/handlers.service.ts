@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Bot, Context, InlineKeyboard, InputFile } from "grammy";
 
@@ -13,6 +13,8 @@ import { TemplateService } from "./template.service";
 
 @Injectable()
 export class HandlersService {
+  private readonly logger = new Logger(HandlersService.name);
+
   constructor(
     private readonly config: ConfigService<AppConfig>,
     private readonly userService: UserService,
@@ -154,6 +156,13 @@ export class HandlersService {
       actionLabel: ACTION_LABELS[action],
       payload,
     });
-    await ctx.api.sendMessage(recipientId, text);
+    try {
+      await ctx.api.sendMessage(recipientId, text);
+    } catch (err) {
+      this.logger.warn(
+        `Failed to notify recipient ${recipientId}. Have they started the bot?`,
+        err,
+      );
+    }
   }
 }

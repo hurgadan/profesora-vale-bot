@@ -4,9 +4,9 @@ import { Test, TestingModule } from "@nestjs/testing";
 import { Bot } from "grammy";
 import { Repository } from "typeorm";
 
-import { clearTables } from "../../_common/utils/tests/clear-tables";
-import { getRepository } from "../../_common/utils/tests/get-repository";
-import { getTestingModuleImports } from "../../_common/utils/tests/get-testing-module-imports";
+import { clearTables } from "../_common/utils/tests/clear-tables";
+import { getRepository } from "../_common/utils/tests/get-repository";
+import { getTestingModuleImports } from "../_common/utils/tests/get-testing-module-imports";
 import { BotEventModule } from "../bot-event/bot-event.module";
 import { BotAction } from "../bot-event/constants";
 import { BotEvent } from "../bot-event/dao/bot-event.entity";

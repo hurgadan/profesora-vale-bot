@@ -24,6 +24,12 @@ export class TelegramService implements OnModuleInit, OnModuleDestroy {
     const token = this.config.getOrThrow<string>("telegramBotToken");
     this.bot = new Bot(token, { client: { timeoutSeconds: 10 } });
     this.handlers.register(this.bot);
+    this.bot.catch((err) => {
+      this.logger.error(
+        `Unhandled error in update ${err.ctx.update.update_id}`,
+        err.error,
+      );
+    });
     await this.bot.init();
     this.logger.log(`Bot @${this.bot.botInfo.username} connected`);
     void this.bot
