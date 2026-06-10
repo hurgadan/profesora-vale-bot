@@ -2,7 +2,7 @@ import * as path from 'node:path';
 
 import { DataSource } from 'typeorm';
 
-import config from '../config';
+import config from '../_common/app/config';
 
 export const AppDataSource = new DataSource({
   ...config().databaseConnectionOptions,

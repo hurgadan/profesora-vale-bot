@@ -2,7 +2,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 
-import config from '../../../config';
+import config from '../../../_common/app/config';
 import type { AppConfig } from '../../types';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
