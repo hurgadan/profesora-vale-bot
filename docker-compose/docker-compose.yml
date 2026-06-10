@@ -1,0 +1,30 @@
+services:
+  postgres:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_DB: profesora_vale_bot_test
+      POSTGRES_USER: profesora_vale_bot
+      POSTGRES_PASSWORD: profesora_vale_bot
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend-api:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      NODE_ENV: test
+      APP_NAME: profesora_vale_bot_test
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_LOGIN: profesora_vale_bot
+      DB_PASSWORD: profesora_vale_bot
+      DB_NAME: profesora_vale_bot_test
+      DB_ENABLE_LOGGING: "false"
+

@@ -1,0 +1,8 @@
+services:
+  postgres:
+    tmpfs:
+      - /var/lib/postgresql/data:size=256m
+
+  backend-api:
+    command: npm run test:e2e
+
