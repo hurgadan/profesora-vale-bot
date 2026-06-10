@@ -27,6 +27,6 @@ export class CreateBotEvents1749600002000 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('bot_events', true);
+    await queryRunner.dropTable('bot_events', true, true);
   }
 }
