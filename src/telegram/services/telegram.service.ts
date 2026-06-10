@@ -24,13 +24,10 @@ export class TelegramService implements OnModuleInit, OnModuleDestroy {
     const token = this.config.getOrThrow<string>("telegramBotToken");
     this.bot = new Bot(token);
     this.handlers.register(this.bot);
+    await this.bot.init();
+    this.logger.log(`Bot @${this.bot.botInfo.username} connected`);
     void this.bot
-      .start({
-        onStart: (botInfo) =>
-          this.logger.log(
-            `Bot @${botInfo.username} started, polling for updates`,
-          ),
-      })
+      .start()
       .catch((err) => this.logger.error("Bot polling stopped with error", err));
   }
 
