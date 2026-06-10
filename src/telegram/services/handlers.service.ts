@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Bot, Context, InlineKeyboard, InputFile } from "grammy";
 
-import { AppConfig } from "../../../_common/types";
+import { AppConfig } from "../../_common/types";
 import { BotAction } from "../../bot-event/constants";
 import { BotEventService } from "../../bot-event/services/bot-event.service";
 import { PendingAction } from "../../user/constants";
@@ -20,7 +20,7 @@ export class HandlersService {
     private readonly templateService: TemplateService,
   ) {}
 
-  register(bot: Bot): void {
+  public register(bot: Bot): void {
     bot.command("start", (ctx) => this.handleStart(ctx));
     bot.callbackQuery(CallbackData.TRIAL_SIGNUP, (ctx) =>
       this.handleTrialSignup(ctx),
@@ -34,25 +34,27 @@ export class HandlersService {
     bot.callbackQuery(CallbackData.ASK_QUESTION, (ctx) =>
       this.handleAskQuestion(ctx),
     );
+    bot.callbackQuery(CallbackData.SHOW_MENU, (ctx) =>
+      this.handleShowMenu(ctx),
+    );
     bot.on("message:text", (ctx) => this.handleTextMessage(ctx));
   }
 
   async handleStart(ctx: Context): Promise<void> {
     const user = await this.userService.upsert(ctx.from!);
-    const keyboard = new InlineKeyboard()
-      .text("Записаться на пробный пакет (2 урока)", CallbackData.TRIAL_SIGNUP)
-      .row()
-      .text(
-        "Выбрать удобное время для видео знакомства",
-        CallbackData.VIDEO_MEETING,
-      )
-      .row()
-      .text("Забрать бесплатный гайд", CallbackData.FREE_GUIDE)
-      .row()
-      .text("Задать вопросы Валерии", CallbackData.ASK_QUESTION);
     await ctx.reply(
       this.templateService.render("welcome", { firstName: user.firstName }),
-      { reply_markup: keyboard },
+      { reply_markup: this.mainMenuKeyboard() },
+    );
+  }
+
+  async handleShowMenu(ctx: Context): Promise<void> {
+    await ctx.answerCallbackQuery();
+    await ctx.reply(
+      this.templateService.render("welcome", {
+        firstName: ctx.from!.first_name,
+      }),
+      { reply_markup: this.mainMenuKeyboard() },
     );
   }
 
@@ -65,6 +67,7 @@ export class HandlersService {
       this.templateService.render("confirm-trial", {
         firstName: user.firstName,
       }),
+      { reply_markup: this.showMenuKeyboard() },
     );
   }
 
@@ -77,6 +80,7 @@ export class HandlersService {
       this.templateService.render("confirm-video", {
         firstName: user.firstName,
       }),
+      { reply_markup: this.showMenuKeyboard() },
     );
   }
 
@@ -85,6 +89,9 @@ export class HandlersService {
     const user = await this.userService.upsert(ctx.from!);
     await this.botEventService.log(user, BotAction.FREE_GUIDE);
     await ctx.replyWithDocument(new InputFile(FREE_GUIDE_PDF_PATH));
+    await ctx.reply(this.templateService.render("guide-sent", {}), {
+      reply_markup: this.showMenuKeyboard(),
+    });
   }
 
   async handleAskQuestion(ctx: Context): Promise<void> {
@@ -110,13 +117,32 @@ export class HandlersService {
       this.templateService.render("question-received", {
         firstName: user.firstName,
       }),
+      { reply_markup: this.showMenuKeyboard() },
     );
+  }
+
+  private mainMenuKeyboard(): InlineKeyboard {
+    return new InlineKeyboard()
+      .text("Записаться на пробный пакет (2 урока)", CallbackData.TRIAL_SIGNUP)
+      .row()
+      .text(
+        "Выбрать удобное время для видео знакомства",
+        CallbackData.VIDEO_MEETING,
+      )
+      .row()
+      .text("Забрать бесплатный гайд", CallbackData.FREE_GUIDE)
+      .row()
+      .text("Задать вопросы Валерии", CallbackData.ASK_QUESTION);
+  }
+
+  private showMenuKeyboard(): InlineKeyboard {
+    return new InlineKeyboard().text("Показать меню", CallbackData.SHOW_MENU);
   }
 
   private async notifyRecipient(
     ctx: Context,
     user: TelegramUser,
-    action: CallbackData,
+    action: Exclude<CallbackData, CallbackData.SHOW_MENU>,
     payload?: string,
   ): Promise<void> {
     const recipientId = this.config.getOrThrow<string>("recipient");

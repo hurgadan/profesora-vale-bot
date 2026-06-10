@@ -102,7 +102,10 @@ describe("HandlersService", () => {
         "123456789",
         "rendered text",
       );
-      expect(mockCtx.reply).toHaveBeenCalledWith("rendered text");
+      expect(mockCtx.reply).toHaveBeenCalledWith(
+        "rendered text",
+        expect.objectContaining({ reply_markup: expect.anything() }),
+      );
     });
   });
 
@@ -122,7 +125,10 @@ describe("HandlersService", () => {
         "123456789",
         "rendered text",
       );
-      expect(mockCtx.reply).toHaveBeenCalledWith("rendered text");
+      expect(mockCtx.reply).toHaveBeenCalledWith(
+        "rendered text",
+        expect.objectContaining({ reply_markup: expect.anything() }),
+      );
     });
   });
 
@@ -139,6 +145,10 @@ describe("HandlersService", () => {
         BotAction.FREE_GUIDE,
       );
       expect(mockCtx.replyWithDocument).toHaveBeenCalledWith(expect.anything());
+      expect(mockCtx.reply).toHaveBeenCalledWith(
+        "rendered text",
+        expect.objectContaining({ reply_markup: expect.anything() }),
+      );
     });
   });
 
@@ -186,7 +196,10 @@ describe("HandlersService", () => {
         "123456789",
         "rendered text",
       );
-      expect(mockCtx.reply).toHaveBeenCalledWith("rendered text");
+      expect(mockCtx.reply).toHaveBeenCalledWith(
+        "rendered text",
+        expect.objectContaining({ reply_markup: expect.anything() }),
+      );
     });
   });
 });
