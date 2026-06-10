@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "npm run clear && nest build",
-    "clear": "rimraf dist",
+    "clear": "rimraf dist *.tsbuildinfo",
     "start:dev": "nest start --watch",
     "start:prod": "node dist/main.js",
     "migration:run": "npm run build && typeorm migration:run -d dist/database/data-source.js",
