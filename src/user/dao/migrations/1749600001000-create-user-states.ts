@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner, Table, TableForeignKey } from 'typeorm';
+import { MigrationInterface, QueryRunner, Table, TableForeignKey, TableIndex } from 'typeorm';
 
 export class CreateUserStates1749600001000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -13,6 +13,14 @@ export class CreateUserStates1749600001000 implements MigrationInterface {
         ],
       }),
       true,
+    );
+    await queryRunner.createIndex(
+      'user_states',
+      new TableIndex({
+        name: 'UQ_user_states_user_id',
+        columnNames: ['user_id'],
+        isUnique: true,
+      }),
     );
     await queryRunner.createForeignKey(
       'user_states',
