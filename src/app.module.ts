@@ -1,10 +1,11 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import config from '../_common/app/config';
-import typeOrmModule from '../_common/app/app-modules/type-orm';
-import { BotEventModule } from './bot-event/bot-event.module';
-import { TelegramModule } from './telegram/telegram.module';
-import { UserModule } from './user/user.module';
+import { Module } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
+
+import { BotEventModule } from "./bot-event/bot-event.module";
+import { TelegramModule } from "./telegram/telegram.module";
+import { UserModule } from "./user/user.module";
+import typeOrmModule from "../_common/app/app-modules/type-orm";
+import config from "../_common/app/config";
 
 @Module({
   imports: [

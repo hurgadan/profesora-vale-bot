@@ -1,22 +1,30 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { TelegramUser } from '../../user/dao/user.entity';
-import { BotAction } from '../constants';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
-@Entity('bot_events')
+import { TelegramUser } from "../../user/dao/user.entity";
+import { BotAction } from "../constants";
+
+@Entity("bot_events")
 export class BotEvent {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => TelegramUser, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'user_id' })
+  @ManyToOne(() => TelegramUser, { onDelete: "CASCADE" })
+  @JoinColumn({ name: "user_id" })
   user: TelegramUser;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: "varchar" })
   action: BotAction;
 
-  @Column({ type: 'text', nullable: true })
+  @Column({ type: "text", nullable: true })
   payload: string | null;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({ name: "created_at" })
   createdAt: Date;
 }

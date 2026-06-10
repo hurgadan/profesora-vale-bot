@@ -5,11 +5,11 @@ import {
   ExceptionFilter,
   HttpStatus,
   Logger,
-} from '@nestjs/common';
-import { Response } from 'express';
-import { QueryFailedError } from 'typeorm';
+} from "@nestjs/common";
+import { Response } from "express";
+import { QueryFailedError } from "typeorm";
 
-import { PostgresErrorCode } from '../../database/postgres-error-codes.enum';
+import { PostgresErrorCode } from "../../database/postgres-error-codes.enum";
 
 interface DatabaseError {
   code?: string;
@@ -27,10 +27,12 @@ export class QueryFailedFilter implements ExceptionFilter {
 
     if (driverError.code === PostgresErrorCode.UniqueViolation) {
       const match = driverError.detail?.match(/Key \((.+)\)=/);
-      const key = match ? match[1] : 'Record';
+      const key = match ? match[1] : "Record";
 
       const conflictException = new ConflictException(`${key} already exists`);
-      response.status(HttpStatus.CONFLICT).json(conflictException.getResponse());
+      response
+        .status(HttpStatus.CONFLICT)
+        .json(conflictException.getResponse());
       return;
     }
 
@@ -38,7 +40,7 @@ export class QueryFailedFilter implements ExceptionFilter {
 
     response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
       statusCode: 500,
-      message: 'Internal Server Error',
+      message: "Internal Server Error",
     });
   }
 }

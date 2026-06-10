@@ -1,9 +1,10 @@
-import { Module } from '@nestjs/common';
-import { BotEventModule } from '../bot-event/bot-event.module';
-import { UserModule } from '../user/user.module';
-import { HandlersService } from './services/handlers.service';
-import { TemplateService } from './services/template.service';
-import { TelegramService } from './services/telegram.service';
+import { Module } from "@nestjs/common";
+
+import { BotEventModule } from "../bot-event/bot-event.module";
+import { UserModule } from "../user/user.module";
+import { HandlersService } from "./services/handlers.service";
+import { TelegramService } from "./services/telegram.service";
+import { TemplateService } from "./services/template.service";
 
 @Module({
   imports: [UserModule, BotEventModule],

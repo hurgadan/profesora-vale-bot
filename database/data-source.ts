@@ -1,12 +1,12 @@
-import * as path from 'node:path';
+import * as path from "node:path";
 
-import { DataSource } from 'typeorm';
+import { DataSource } from "typeorm";
 
-import config from '../_common/app/config';
+import config from "../_common/app/config";
 
 export const AppDataSource = new DataSource({
   ...config().databaseConnectionOptions,
-  entities: [path.join(__dirname, '..', '**', '*.entity{.ts,.js}')],
-  migrations: [path.join(__dirname, '..', '**', 'migrations', '*{.ts,.js}')],
-  migrationsTableName: 'migrations',
+  entities: [path.join(__dirname, "..", "**", "*.entity{.ts,.js}")],
+  migrations: [path.join(__dirname, "..", "**", "migrations", "*{.ts,.js}")],
+  migrationsTableName: "migrations",
 });

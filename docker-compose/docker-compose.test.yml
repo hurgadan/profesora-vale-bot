@@ -3,6 +3,6 @@ services:
     tmpfs:
       - /var/lib/postgresql:size=256m
 
-  backend-api:
+  backend:
     command: npm run test:e2e
 

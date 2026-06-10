@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import { PendingAction } from '../constants';
-import { TelegramUser } from '../dao/user.entity';
-import { UserRepository } from '../repositories/user.repository';
-import { UserStateRepository } from '../repositories/user-state.repository';
+import { Injectable } from "@nestjs/common";
+
+import { PendingAction } from "../constants";
+import { TelegramUser } from "../dao/user.entity";
+import { UserStateRepository } from "../repositories/user-state.repository";
+import { UserRepository } from "../repositories/user.repository";
 
 interface TelegramFrom {
   id: number;
@@ -43,7 +44,10 @@ export class UserService {
     if (existing) {
       await this.stateRepo.update(existing.id, { pendingAction: action });
     } else {
-      await this.stateRepo.save({ user: { id: userId } as unknown as TelegramUser, pendingAction: action });
+      await this.stateRepo.save({
+        user: { id: userId } as unknown as TelegramUser,
+        pendingAction: action,
+      });
     }
   }
 

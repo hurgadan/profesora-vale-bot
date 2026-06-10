@@ -1,8 +1,9 @@
-import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { Bot } from 'grammy';
-import { AppConfig } from '../../../_common/types';
-import { HandlersService } from './handlers.service';
+import { Injectable, OnModuleDestroy, OnModuleInit } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { Bot } from "grammy";
+
+import { HandlersService } from "./handlers.service";
+import { AppConfig } from "../../../_common/types";
 
 @Injectable()
 export class TelegramService implements OnModuleInit, OnModuleDestroy {
@@ -14,7 +15,7 @@ export class TelegramService implements OnModuleInit, OnModuleDestroy {
   ) {}
 
   async onModuleInit(): Promise<void> {
-    const token = this.config.getOrThrow<string>('telegramBotToken');
+    const token = this.config.getOrThrow<string>("telegramBotToken");
     this.bot = new Bot(token);
     this.handlers.register(this.bot);
     void this.bot.start();

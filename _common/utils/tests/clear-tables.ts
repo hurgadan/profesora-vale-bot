@@ -1,5 +1,5 @@
-import type { TestingModule } from '@nestjs/testing';
-import { DataSource } from 'typeorm';
+import type { TestingModule } from "@nestjs/testing";
+import { DataSource } from "typeorm";
 
 export async function clearTables(moduleFixture: TestingModule): Promise<void> {
   const dataSource = moduleFixture.get(DataSource);
@@ -11,5 +11,7 @@ export async function clearTables(moduleFixture: TestingModule): Promise<void> {
     return;
   }
 
-  await dataSource.query(`TRUNCATE TABLE ${tableNames.join(', ')} RESTART IDENTITY CASCADE`);
+  await dataSource.query(
+    `TRUNCATE TABLE ${tableNames.join(", ")} RESTART IDENTITY CASCADE`,
+  );
 }

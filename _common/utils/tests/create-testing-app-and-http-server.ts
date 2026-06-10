@@ -1,10 +1,10 @@
-import { Server } from 'node:http';
+import { Server } from "node:http";
 
-import { type INestApplication, ValidationPipe } from '@nestjs/common';
-import { type TestingModule } from '@nestjs/testing';
+import { type INestApplication, ValidationPipe } from "@nestjs/common";
+import { type TestingModule } from "@nestjs/testing";
 
-import { getValidationPipeParams } from '../../app/get-validation-pipe-params';
-import { QueryFailedFilter } from '../../filters/query-failed.filter';
+import { getValidationPipeParams } from "../../app/get-validation-pipe-params";
+import { QueryFailedFilter } from "../../filters/query-failed.filter";
 
 export const createTestingAppAndHttpServer = async (
   testingModule: TestingModule,
