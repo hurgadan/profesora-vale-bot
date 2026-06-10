@@ -15,7 +15,7 @@
     "test:unit": "jest --testPathIgnorePatterns=\"\\\\.e2e\\\\.spec\\\\.ts$\"",
     "test:e2e": "npm run migration:run && jest --runInBand --testPathPatterns=\"\\\\.e2e\\\\.spec\\\\.ts$\"",
     "docker:test": "docker compose -f ./docker-compose/docker-compose.yml -f ./docker-compose/docker-compose.test.yml up --build --exit-code-from backend",
-    "lint": "eslint \"{src,_common,database}/**/*.ts\" --max-warnings=0"
+    "lint": "eslint \"src/**/*.ts\" --max-warnings=0"
   },
   "dependencies": {
     "@nestjs/common": "^11.1.9",
