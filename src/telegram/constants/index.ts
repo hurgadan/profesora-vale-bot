@@ -1,3 +1,5 @@
+import * as path from 'path';
+
 export enum CallbackData {
   TRIAL_SIGNUP = 'trial_signup',
   VIDEO_MEETING = 'video_meeting',
@@ -11,3 +13,5 @@ export const ACTION_LABELS: Record<CallbackData, string> = {
   [CallbackData.FREE_GUIDE]: 'Запрос бесплатного гайда',
   [CallbackData.ASK_QUESTION]: 'Вопрос Валерии',
 };
+
+export const FREE_GUIDE_PDF_PATH = path.join(process.cwd(), 'assets', 'cv.pdf');

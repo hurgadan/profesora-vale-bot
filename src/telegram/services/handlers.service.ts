@@ -1,4 +1,3 @@
-import * as path from 'path';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Bot, Context, InlineKeyboard, InputFile } from 'grammy';
@@ -8,7 +7,7 @@ import { BotEventService } from '../../bot-event/services/bot-event.service';
 import { PendingAction } from '../../user/constants';
 import { TelegramUser } from '../../user/dao/user.entity';
 import { UserService } from '../../user/services/user.service';
-import { ACTION_LABELS, CallbackData } from '../constants';
+import { ACTION_LABELS, CallbackData, FREE_GUIDE_PDF_PATH } from '../constants';
 import { TemplateService } from './template.service';
 
 @Injectable()
@@ -62,8 +61,7 @@ export class HandlersService {
     await ctx.answerCallbackQuery();
     const user = await this.userService.upsert(ctx.from!);
     await this.botEventService.log(user, BotAction.FREE_GUIDE);
-    const pdfPath = path.join(process.cwd(), 'assets', 'cv.pdf');
-    await ctx.replyWithDocument(new InputFile(pdfPath));
+    await ctx.replyWithDocument(new InputFile(FREE_GUIDE_PDF_PATH));
   }
 
   async handleAskQuestion(ctx: Context): Promise<void> {
