@@ -6,6 +6,6 @@
     "assets": [
       { "include": "**/templates/*.hbs", "watchAssets": true }
     ],
-    "tsConfigPath": "tsconfig.json"
+    "tsConfigPath": "tsconfig.build.json"
   }
 }
