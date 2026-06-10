@@ -9,6 +9,7 @@
     "esModuleInterop": true,
     "target": "ES2021",
     "sourceMap": true,
+    "rootDir": "./src",
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
@@ -16,6 +17,6 @@
     "strictNullChecks": true,
     "noImplicitAny": false
   },
-  "include": ["src/**/*", "_common/**/*", "database/**/*"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
 }
