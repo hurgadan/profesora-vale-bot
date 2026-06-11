@@ -14,7 +14,7 @@
     "migration:dev": "typeorm migration:run -d dist/database/data-source.js",
     "test:unit": "jest --testPathIgnorePatterns=\"\\\\.e2e\\\\.spec\\\\.ts$\"",
     "test:e2e": "npm run migration:run && jest --runInBand --testPathPatterns=\"\\\\.e2e\\\\.spec\\\\.ts$\"",
-    "docker:prod": "docker compose -f ./docker-compose/docker-compose.prod.yml up --build -d",
+    "docker:prod": "docker compose --project-directory . -f ./docker-compose/docker-compose.prod.yml up --build -d",
     "docker:test": "docker compose -f ./docker-compose/docker-compose.yml -f ./docker-compose/docker-compose.test.yml up --build --exit-code-from backend",
     "lint": "eslint \"src/**/*.ts\" --max-warnings=0"
   },
