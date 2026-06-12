@@ -18,4 +18,8 @@ export const ACTION_LABELS: Record<
   [CallbackData.ASK_QUESTION]: "Вопрос Валерии",
 };
 
-export const FREE_GUIDE_PDF_PATH = path.join(process.cwd(), "assets", "cv.pdf");
+export const FREE_GUIDE_PDF_PATH = path.join(
+  process.cwd(),
+  "assets",
+  "Читаем на испанском за 30 минут!.pdf",
+);
